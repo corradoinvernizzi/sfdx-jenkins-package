@@ -5,7 +5,7 @@ import groovy.json.JsonSlurperClassic
 node {
 
     def SF_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
-    def SF_USERNAME=env.SFDC_HOST_DH
+    def SF_USERNAME=env.HUB_ORG_DH
     def SERVER_KEY_CREDENTALS_ID=env.JWT_CRED_ID_DH
     def TEST_LEVEL='RunLocalTests'
     def PACKAGE_NAME='0Ho1p000000GmcKCAS'
@@ -36,7 +36,7 @@ node {
         // -------------------------------------------------------------------------
 
         stage('Authorize DevHub') {
-            rc = command "sfdx force:auth:jwt:grant --clientid ${SF_CONSUMER_KEY} --username ${SF_USERNAME} --jwtkeyfile ${server_key_file} --setdefaultdevhubusername --setalias HubOrg"
+            rc = command "sfdx force:auth:jwt:grant --clientid ${SF_CONSUMER_KEY} --username ${SF_USERNAME} --jwtkeyfile ${server_key_file} --setdefaultdevhubusername --setalias DevHub"
             if (rc != 0) {
                 error 'Salesforce dev hub org authorization failed.'
             }
