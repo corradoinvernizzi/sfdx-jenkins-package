@@ -48,7 +48,7 @@ node {
         // -------------------------------------------------------------------------
 
         stage('Create Test Scratch Org') {
-            rc = command "sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1"
+            rc = command "sfdx force:org:create --targetdevhubusername DevHub --setdefaultusername --definitionfile config/project-scratch-def.json --setalias ciorg --wait 10 --durationdays 1"
             if (rc != 0) {
                 error 'Salesforce test scratch org creation failed.'
             }
@@ -109,9 +109,9 @@ node {
 
         stage('Create Package Version') {
             if (isUnix()) {
-                output = sh returnStdout: true, script: "sfdx force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg"
+                output = sh returnStdout: true, script: "sfdx force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json --targetdevhubusername DevHub"
             } else {
-                output = bat(returnStdout: true, script: "sfdx force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json --targetdevhubusername HubOrg").trim()
+                output = bat(returnStdout: true, script: "sfdx force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json --targetdevhubusername DevHub").trim()
                 output = output.readLines().drop(1).join(" ")
             }
 
@@ -134,7 +134,7 @@ node {
         // -------------------------------------------------------------------------
 
         stage('Create Package Install Scratch Org') {
-            rc = command "sfdx force:org:create --targetdevhubusername HubOrg --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10 --durationdays 1"
+            rc = command "sfdx force:org:create --targetdevhubusername DevHub --setdefaultusername --definitionfile config/project-scratch-def.json --setalias installorg --wait 10 --durationdays 1"
             if (rc != 0) {
                 error 'Salesforce package install scratch org creation failed.'
             }
