@@ -122,6 +122,7 @@ node {
             def response = jsonSlurper.parseText(output)
 
             PACKAGE_VERSION = response.result.SubscriberPackageVersionId
+            echo ${PACKAGE_VERSION}
 
             response = null
 
