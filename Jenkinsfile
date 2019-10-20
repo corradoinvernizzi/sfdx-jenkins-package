@@ -84,7 +84,7 @@ node {
         // -------------------------------------------------------------------------
 
         stage('Run Tests In Test Scratch Org') {
-            rc = command "sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat tap --codecoverage --testlevel ${TEST_LEVEL}"
+            rc = command "sfdx force:apex:test:run --targetusername ciorg --wait 10 --resultformat junit --codecoverage --testlevel ${TEST_LEVEL}"
             if (rc != 0) {
                 error 'Salesforce unit test run in test scratch org failed.'
             }
@@ -122,11 +122,10 @@ node {
             def response = jsonSlurper.parseText(output)
 
             PACKAGE_VERSION = response.result.SubscriberPackageVersionId
-            echo ${PACKAGE_VERSION}
-
+            
             response = null
 
-            echo ${PACKAGE_VERSION}
+            //echo ${PACKAGE_VERSION}
         }
 
 
@@ -171,7 +170,7 @@ node {
         // -------------------------------------------------------------------------
 
         stage('Run Tests In Package Install Scratch Org') {
-            rc = command "sfdx force:apex:test:run --targetusername installorg --resultformat tap --codecoverage --testlevel ${TEST_LEVEL} --wait 10"
+            rc = command "sfdx force:apex:test:run --targetusername installorg --resultformat junit --codecoverage --testlevel ${TEST_LEVEL} --wait 10"
             if (rc != 0) {
                 error 'Salesforce unit test run in pacakge install scratch org failed.'
             }
