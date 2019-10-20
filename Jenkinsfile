@@ -187,6 +187,17 @@ node {
                 error 'Salesforce package install scratch org deletion failed.'
             }
         }
+
+        / -------------------------------------------------------------------------
+        // Install package in DevHub org.
+        // -------------------------------------------------------------------------
+
+        stage('Install Package In DevHub Org') {
+            rc = command "sfdx force:package:install --package ${PACKAGE_VERSION} --targetusername DevHub --wait 10"
+            if (rc != 0) {
+                error 'Salesforce package install failed.'
+            }
+        }
     }
 }
 
